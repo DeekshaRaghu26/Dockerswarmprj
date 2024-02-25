@@ -1,0 +1,36 @@
+Launch three EC2 instances:
+1)Name: swarm-manager,swarm-worker1 and swarm-worker2
+2)Operating System- Ubuntu
+3)Instance type - t3.micro
+4)Key pair- Proceed without a key pair 
+5)Configure Security group 
+•	Allow SSH traffic - to connect to the EC2 instance 
+•	Type - Custom TCP , Port range- 8001 , Source type: Anywhere
+•	Type - Custom TCP , Port range- 2733 , Source type: Anywhere
+6)Click Launch
+7)Perform the latest update:
+sudo apt-get update
+8) Command to install docker
+sudo apt-get install docker.io -y
+9) Start Docker service:
+sudo systemctl start docker
+10)Try running the sample image
+sudo docker run hello-world
+11)To enable docker service
+sudo systemctl enable docker
+12)It helps end-users in creating and deploying a cluster of Docker nodes
+docker swarm init
+13)Then copy paste the join command diplayed to the other two worker nodes
+Example: sudo docker swarm join --token SWMTKN-1-4h9d094wjccg4ihvbdogmnfm39my1ciip8nmw8ru2d3s1e11h3-4gsnrnrqs2fazz798svpfd734 172.31.36.133:2377
+14)Check if the worker nodes are etting listed
+sudo docker node ls
+15)Command to create a service running a react-django image
+sudo docker service create --name django-app-service --replicas 3 --publish 8001:8001 trainwithshubham/react-django-app:latest
+16) lists services that are running in the swarm.
+sudo docker service ls
+17) To list Docker containers. It provides crucial information about each container, such as its ID, image, status, and more
+sudo docker ps
+18)To remove the worker nodes, use the following command
+sudo docker swarm leave
+
+ 
